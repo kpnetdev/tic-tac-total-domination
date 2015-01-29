@@ -1,0 +1,46 @@
+
+coordinate system wins:
+
+	11, 12, 13  -> first coordinate same, three sets
+	11, 21, 31  -> last coordinate same, three sets
+	[11, 22, 33], [31, 22, 13]  -> hand-code the diagonals
+
+
+open_squares:
+
+	initializes to [1,2,3].product([1,2,3])
+	player/computer 'taking' a square moves it into their array
+	game continues until player quits or open_squares.empty?
+
+
+
+class Player
+  attr_accessor :squares
+
+  def initialize
+    @squares = []
+
+  def wins
+	  checks @squares for x, y or diagonal wins
+
+	def square_sets_one_away_from_winning
+	  returns all two-element subsets of @squares that are one away from a win combo
+
+
+
+
+business logic:
+
+  ways_to_win = human.square_sets_one_away_from_winning
+
+
+human turn:
+
+  #get_player_square  -> i/o can be gets.chomp at first, just want the choice
+  human.squares << open_squares.delete(get_player_square)
+
+
+computer turn:
+
+
+
