@@ -44,3 +44,25 @@ computer turn:
 
 
 
+
+Big Picture:
+
+board initializes
+player moves
+
+
+
+deeper logic:
+
+  win impossibility (absent mistakes) comes well before game end
+    what would a data structure that took that into account look like?
+    	eight sets of possible winning squares
+    		games ends when either player captures any full set
+    		OR when neither player can capture a full set
+    		i.e. each player has at least one square from each set
+
+	  	each player gets a full set of winning combos to begin the game
+	  	a player's move means taking that number out of the OPPOSING player's arrays
+	  		game ends when either player has any winning_combos sub_array.count of 0; opposing player wins
+	  		OR when neither player has any winning_combos sub_array.count of 3; neither player can possibly win
+
