@@ -66,3 +66,21 @@ deeper logic:
 	  		game ends when either player has any winning_combos sub_array.count of 0; opposing player wins
 	  		OR when neither player has any winning_combos sub_array.count of 3; neither player can possibly win
 
+
+Computer Turn:
+
+	if constrained, take constrained move
+	else evaluate array of possible moves
+	  take first move that leads to a board where none of human's possible moves
+	  constrain us to where...
+
+
+	evaluate move
+		take move
+		if players.possible_turns.include?(constrained_two_way_player_win)
+			return "danger"
+		if constrained?
+		  evaluate move(constrained move)
+	end
+
+	if evalutate_move(move) == "danger", don't do it!
