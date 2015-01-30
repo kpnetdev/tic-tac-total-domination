@@ -4,16 +4,20 @@ class Player
 	def initialize(name, letter)
 		@name = name
 		@letter = letter
-		@squares = []
 		@winning_combos = get_winning_combos
+		@squares = []
 	end
 
-	def choose_square(square)
+	def add_square(square)
 		@squares << square
 	end
 
 	def lose_square(square)
 		@winning_combos.each {|combo| combo.delete(square)}
+	end
+
+	def lost?
+		@winning_combos.select {|combo| combo.empty?}.first
 	end
 
 	private
