@@ -42,7 +42,6 @@ class Game
 	end
 
 	def valid_square?(square)
-		taken_squares = @players.map {|player| player.squares}.flatten
 		!taken_squares.include?(square) && (1..9).to_a.include?(square)
 	end
 
@@ -62,14 +61,19 @@ class Game
 	end
 
 	def unbeatable_move
-		no_brainer = easy_win
+		no_brainer = one_move_win
 		return no_brainer if no_brainer
+		open_squares.each do |square|
+			return square if evaluate_move(square) == "good"
+		end
+	end
 
-		# possible_moves = ???
-		# possible_moves.each do |move|
-		# 	return move if evaluate_move(move) == "good"
-		# end
-		
+	def taken_squares
+		@players.map {|player| player.squares}.flatten
+	end		
+
+	def open_squares
+		(1..9).to_a - taken_squares 
 	end
 
 	def evaluate_move(move)
@@ -88,7 +92,7 @@ class Game
 	end
 
 
-	def easy_win
+	def one_move_win
 		@player.winning_combos.select do |combo|
 			combo.count == 1 && !@player.squares.include?(combo.first)
 		end.flatten.first
