@@ -7,24 +7,33 @@ class Game
 
 	def initialize
 		@board = Board.new
-		@players = make_players!
+		@computer = Player.new("Computer", "Y")
+		@player = Player.new("Human", "X")]
+		@players = [@computer, @player]
 	end
 
 	def start!
 		@board.draw!
 
 		until we_have_a_loser || @board.full?
-			current_player, other_player = @players.reverse!
-			square = get_move
-			current_player.add_square(square)
-			other_player.lose_square(square)
+			# current_player, other_player = @players.reverse!
+			square = get_player_move
+			player_move!(square)
+			# current_player.add_square(square)
+			# other_player.lose_square(square)
+			computer_move!
 			@board.update!(current_player, square)
 			@board.draw!
 		end
 	end
 
+	def player_move!(square)
+		@player.add_square(square)
+		@computer.lose_square(square)
+	end
 
-	def get_move
+
+	def get_player_move
 		loop do
 			square = gets.chomp.to_i
 			break square if valid_square?(square)
@@ -44,6 +53,45 @@ class Game
 
 	def we_have_a_loser
 		@players.select {|player| player.lost?}.first
+	end
+
+	def computer_move!
+		square = unbeatable_move
+		@computer.add_square(square)
+		@player.lose_square(square)
+	end
+
+	def unbeatable_move
+		no_brainer = easy_win
+		return no_brainer if no_brainer
+
+		# possible_moves = ???
+		# possible_moves.each do |move|
+		# 	return move if evaluate_move(move) == "good"
+		# end
+		
+	end
+
+	def evaluate_move(move)
+		@computer.add_square(move)
+		@player.lose_square(move)
+
+		opponent_moves = all_human_moves_to_consider
+		opponent_moves.each do |opp_move|
+			return "bad" if two_way_win(opp_move)
+			if computer_constrained?(opp_move)
+				return evaluate_move(constrained_computer_move)
+			else
+				return "good"
+			end
+		end
+	end
+
+
+	def easy_win
+		@player.winning_combos.select do |combo|
+			combo.count == 1 && !@player.squares.include?(combo.first)
+		end.flatten.first
 	end
 
 	# def analyze_board
