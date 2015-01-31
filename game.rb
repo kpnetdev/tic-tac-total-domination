@@ -47,9 +47,9 @@ class Game
 	end
 
 
-	def game_won?
-		@players.map {|player| player.squares}.flatten.include?(13)
-	end
+	# def game_won?
+	# 	@players.map {|player| player.squares}.flatten.include?(13)
+	# end
 
 	def we_have_a_loser
 		@players.select {|player| player.lost?}.first
