@@ -74,14 +74,7 @@ class ComboAnalyzer
 		safe_combo_weakpoints.first.first
 	end
 
-	##call evaluate_move from outside with (move, @player.make_copy, @computer.make_copy)##
 
-	def evaluate_move(move, player, computer)
-		opponent_moves = all_human_moves_to_consider(player)
-		opponent_moves.each do |opp_move|
-			return "bad" if two_way_win(opp_move)
-			if computer_constrained?(opp_move)
-		
 
 
 
