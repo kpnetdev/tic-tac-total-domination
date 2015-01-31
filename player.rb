@@ -20,6 +20,25 @@ class Player
 		@winning_combos.select {|combo| combo.empty?}.first
 	end
 
+	def vulnerable_combos
+		@winning_combos.select {|combo| combo.length == 2}
+	end
+
+	def vulnerable_squares
+		freq_hash = vulnerable_combos.flatten.inject(Hash.new(0)) do |hsh, num|
+			hsh[num] += 1
+			hsh
+		end
+		freq_hash.keys.select {|k| freq_hash[k] > 1 }
+	end
+
+	def make_copy
+		copy = Player.new(self.name, self.letter)
+		copy.winning_combos = @winning_combos.dup
+		copy.squares = @squares.dup
+		return copy
+	end
+
 	private
 
 	def get_winning_combos

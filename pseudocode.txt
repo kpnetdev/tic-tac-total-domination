@@ -77,7 +77,7 @@ Computer Turn:
 
 	evaluate move
 		take move
-		if players.possible_turns.include?(constrained_two_way_player_win)
+		if computers.possible_turns.include?(constrained_two_way_player_win)
 			return "danger"
 		if constrained?
 		  evaluate move(constrained move)
