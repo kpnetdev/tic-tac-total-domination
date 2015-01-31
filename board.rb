@@ -13,6 +13,7 @@ class Board
 
 	def update!(computer, human_player)
 		[computer, human_player].each do |player|
+			# puts "player_squares: #{player.squares}"
 			player.squares.each do |square|
 				@squares_array[square - 1] = player.letter
 			end

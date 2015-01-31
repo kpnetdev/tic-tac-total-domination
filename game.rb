@@ -20,9 +20,10 @@ class Game
 			# current_player, other_player = @players.reverse!
 			square = get_player_move
 			player_move!(square)
+			@board.update!(@computer, @player)
 			# current_player.add_square(square)
 			# other_player.lose_square(square)
-			computer_move!
+			computer_move! unless @board.full?
 			@board.update!(@computer, @player)
 			@board.draw!
 		end
