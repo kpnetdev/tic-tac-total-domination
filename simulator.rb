@@ -15,9 +15,9 @@ class Simulator
 		player_moves = all_player_moves_to_consider
 		player_moves.each do |player_move|
 			player_move_sim = Simulator.new(@player, @computer, player_move, @computer)
-			# binding.pry ## 1-level deep @computer copy with square - correct
+			binding.pry ## 1-level deep @computer copy with square - correct
 			ways_you_can_die = player_move_sim.find_checkmate_squares
-			# binding.pry  ## 1-level deep @computer copy without square --- SWEET JESUS, WHY?!
+			binding.pry  ## 1-level deep @computer copy without square --- SWEET JESUS, WHY?!
 			return "bad" if ways_you_can_die.count > 1
 			if ways_you_can_die == 1
 				return Simulator.new(@player, @computer, ways_you_can_die.first).evaluate
@@ -37,14 +37,14 @@ class Simulator
 	def player_play_move!
 		@player.add_square(@move)
 		# binding.pry
-		# @computer.lose_square(@move)
+		@computer.lose_square(@move)
 		# binding.pry
 	end
 
 	def find_checkmate_squares
-		# binding.pry ## 2-level deep @computer copy with square - correct
+		binding.pry ## 2-level deep @computer copy with square - correct
 		player_play_move!
-		# binding.pry ## 2-level deep @computer copy without square - correct
+		binding.pry ## 2-level deep @computer copy without square - correct
 		@computer.all_one_move_wins(@move)
 		# binding.pry
 	end

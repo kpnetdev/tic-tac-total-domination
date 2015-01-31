@@ -19,12 +19,10 @@ class Game
 		until we_have_a_loser || @board.full?
 			# current_player, other_player = @players.reverse!
 			square = get_player_move
-			binding.pry
 			player_move!(square)
 			# current_player.add_square(square)
 			# other_player.lose_square(square)
 			computer_move!
-			binding.pry
 			@board.update!(@computer, @player)
 			@board.draw!
 		end
@@ -64,11 +62,14 @@ class Game
 	end
 
 	def unbeatable_move
-		no_brainer = @player.all_one_move_wins.first
-		return no_brainer if no_brainer
+		winning_move = @player.all_one_move_wins.first
+		return winning_move if winning_move
+
+		self_defense = (@computer.all_one_move_wins - @computer.squares).first
+		return self_defense if self_defense
+
 		open_squares.each do |square|
 			return square if evaluate_move(square) == "good"
-			# binding.pry
 		end
 	end
 
