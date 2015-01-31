@@ -1,6 +1,7 @@
-require './player.rb'
+# require './player.rb'
 require './board.rb'
-require 'pry'
+require './simulator.rb'
+# require 'pry'
 
 class Game
 	attr_accessor :players ## REMOVE!! JUST FOR TESTING!! ##
@@ -8,7 +9,7 @@ class Game
 	def initialize
 		@board = Board.new
 		@computer = Player.new("Computer", "Y")
-		@player = Player.new("Human", "X")]
+		@player = Player.new("Human", "X")
 		@players = [@computer, @player]
 	end
 
@@ -18,11 +19,13 @@ class Game
 		until we_have_a_loser || @board.full?
 			# current_player, other_player = @players.reverse!
 			square = get_player_move
+			binding.pry
 			player_move!(square)
 			# current_player.add_square(square)
 			# other_player.lose_square(square)
 			computer_move!
-			@board.update!(current_player, square)
+			binding.pry
+			@board.update!(@computer, @player)
 			@board.draw!
 		end
 	end
@@ -61,10 +64,11 @@ class Game
 	end
 
 	def unbeatable_move
-		no_brainer = one_move_win
+		no_brainer = @player.all_one_move_wins.first
 		return no_brainer if no_brainer
 		open_squares.each do |square|
 			return square if evaluate_move(square) == "good"
+			# binding.pry
 		end
 	end
 
@@ -77,40 +81,21 @@ class Game
 	end
 
 	def evaluate_move(move)
-		@computer.add_square(move)
-		@player.lose_square(move)
+		Simulator.new(@player, @computer, move).evaluate
 
-		opponent_moves = all_human_moves_to_consider
-		opponent_moves.each do |opp_move|
-			return "bad" if two_way_win(opp_move)
-			if computer_constrained?(opp_move)
-				return evaluate_move(constrained_computer_move)
-			else
-				return "good"
-			end
-		end
+		# @computer.add_square(move)
+		# @player.lose_square(move)
+
+		# opponent_moves = all_player_moves_to_consider
+		# opponent_moves.each do |opp_move|
+		# 	return "bad" if two_way_win(opp_move)
+		# 	if computer_constrained?(opp_move)
+		# 		return evaluate_move(constrained_computer_move)
+		# 	else
+		# 		return "good"
+		# 	end
+		# end
 	end
-
-
-	def one_move_win
-		@player.winning_combos.select do |combo|
-			combo.count == 1 && !@player.squares.include?(combo.first)
-		end.flatten.first
-	end
-
-	# def analyze_board
-	# 	# test_game = self.dup
-
-	# 	human, computer = @players.partition {|player| player.name == "Human"}
-	# 	[[human_squares, human_combos], [computer_squares, computer_combos] = [human, computer].map do |player|
-
-
-
-
-
-
-	# end
-
 
 
 	private
@@ -118,7 +103,6 @@ class Game
 	def make_players!
 		[Player.new("Computer", "Y"), Player.new("Human", "X")]
 	end
-
 
 end
 
