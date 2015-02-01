@@ -52,14 +52,17 @@ class Game
 		end
 	end
 
-	def computer_move_and_board_status
-		"#s#{unbeatable_move}"
+	def computer_move_and_status
+		move = unbeatable_move
+		square_id = "#s#{move}"
+		computer_wins_this_turn = @player.killing_blows.include?(move)
+		{computer_square: square_id, computer_won: computer_wins_this_turn}
 	end
 
 
 	def self.get_computer_move(board_array)
 		game = Game.new
 		game.import!(board_array)
-		game.computer_move_and_board_status
+		game.computer_move_and_status
 	end
 end

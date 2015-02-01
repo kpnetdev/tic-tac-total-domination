@@ -18,7 +18,11 @@ class Player
 	end
 
 	def lost?
-		@winning_combos.select {|combo| combo.empty?}.first
+		@winning_combos.find {|combo| combo.empty?}
+	end
+
+	def killing_blows
+		@winning_combos.select {|combo| combo.length == 1}.flatten
 	end
 
 	def all_one_move_wins(player_move=nil)

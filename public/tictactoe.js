@@ -12,8 +12,13 @@ function showGameOver() {
   "use strict";
   var target;
   target = $("#result");
-  target.css('color', '#505');
-  target.text("Don't have a cow, man!");
+  target.css('color', '#000');
+  target.text("DOMINATION");
+}
+
+function getGameStatus() {
+  "use strict";
+  return $("#result").text();
 }
 
 function noEmptySquares(value, index, arr) {
@@ -32,7 +37,7 @@ function resetGame() {
   $("#squares td").text('');
   target = $("#result");
   target.css('color', '#000');
-  target.text('Click a square');
+  target.text('Go ahead. You might win this time...');
 }
 
 function moveAt() {
@@ -41,7 +46,7 @@ function moveAt() {
 
   playerSquare = $(this);
 
-  if (playerSquare.text() !== '') {
+  if (playerSquare.text() !== '' || getGameStatus() === 'DOMINATION') {
     return;
   }
 
@@ -57,10 +62,13 @@ function moveAt() {
 
   // $.get("ajax", { squareId: playerSquare.attr("id") }).done(function ( computerMove ) {
     $.get("ajax", { boardArray: board }).done(function ( serverResponse ) {
+      debugger
       computerSquare = $(serverResponse.squareId);
-      // console.log(serverResponse.squareId);
       computerSquare.css('color', '#800');
       computerSquare.text('O');
+      if (serverResponse.gameOver === true) {
+        showGameOver();
+      };
     }, "json");
   };
   // // if game is over, display message
