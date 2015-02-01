@@ -9,7 +9,7 @@ h1 {
     color: #000;
 }
 
-table#tictac td {
+table#squares td {
     width: 3em;
     height: 3em;
     text-align: center;
@@ -17,11 +17,11 @@ table#tictac td {
     font: bold 36px sans-serif;
 }
 
-td#cell1, td#cell2, td#cell3, td#cell4, td#cell5, td#cell6 {
+td#s1, td#s2, td#s3, td#s4, td#s5, td#s6 {
     border-bottom: 3px solid #000;
 }
 
-td#cell1, td#cell2, td#cell4, td#cell5, td#cell7, td#cell8 {
+td#s1, td#s2, td#s4, td#s5, td#s7, td#s8 {
     border-right: 3px solid #000;
 }
 
