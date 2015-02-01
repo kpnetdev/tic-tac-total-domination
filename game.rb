@@ -1,10 +1,11 @@
 require './board.rb'
 require './simulator.rb'
+require 'pry'
 
 class Game
 
 	def initialize
-		@board = Board.new
+		# @board = Board.new
 		@computer = Player.new("Computer", "Y")
 		@player = Player.new("Human", "X")
 		@players = [@computer, @player]
@@ -47,8 +48,8 @@ class Game
 		@computer.lose_square(square)
 	end
 
-	def computer_move!
-		square = unbeatable_move
+	def computer_move!(square)
+		# square = unbeatable_move
 		@computer.add_square(square)
 		@player.lose_square(square)
 	end
@@ -72,8 +73,28 @@ class Game
 	def evaluate_move(move)
 		Simulator.new(@player, @computer, move).evaluate
 	end
+
+	def import!(board_array)
+		board_array.each_with_index do |letter, index|
+			if letter == "X"
+				player_move!(index)
+			elsif letter == "O"
+				computer_move!(index)
+			end
+		end
+	end
+
+	def square_id_for_computer_move
+		"#s#{unbeatable_move}"
+	end
+
+	def self.get_computer_move(board_array)
+		game = Game.new
+		game.import!(board_array)
+		game.square_id_for_computer_move
+	end
 end
 
 
-game = Game.new
-game.start!
+# game = Game.new
+# game.start!

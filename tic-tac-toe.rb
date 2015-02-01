@@ -11,6 +11,7 @@ end
 
 get '/ajax' do
 	content_type :json
-	board = params[:squareId]
-	{ :squareId => '#s1' }.to_json
+	board = params[:boardArray]
+	computer_move = Game.get_computer_move(board)
+	{ :squareId => computer_move }.to_json
 end

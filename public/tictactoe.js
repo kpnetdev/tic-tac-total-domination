@@ -2,8 +2,8 @@ function fetchBoard() {
   "use strict";
   var board;
   board = ['', '', '', '', '', '', '', '', ''];
-  $("#tictac td").each(function (index) {
-    board[index] = $(this).text();
+  $("#squares td").each(function (index) {
+    board[index + 1] = $(this).text();
   });
   return board;
 }
@@ -49,11 +49,14 @@ function moveAt() {
   playerSquare.css('color', '#800');
   playerSquare.text('X');
 
-  $.get("ajax", { squareId: playerSquare.attr("id") }).done(function ( computerMove ) {
+  board = fetchBoard();
+
+  // $.get("ajax", { squareId: playerSquare.attr("id") }).done(function ( computerMove ) {
+  $.get("ajax", { boardArray: board }).done(function ( computerMove ) {
     computerSquare = $(computerMove.squareId);
-    console.log(computerMove.squareId);
+    // console.log(computerMove.squareId);
     computerSquare.css('color', '#800');
-    computerSquare.text('J');
+    computerSquare.text('O');
   }, "json");
 
   // // if game is over, display message
