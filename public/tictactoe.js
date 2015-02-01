@@ -3,24 +3,25 @@ function fetchBoard() {
   var board;
   board = ['', '', '', '', '', '', '', '', ''];
   $("#squares td").each(function (index) {
-    board[index + 1] = $(this).text();
+    board[index] = $(this).text();
   });
   return board;
 }
 
-function showGameOver(result) {
+function showGameOver() {
   "use strict";
   var target;
   target = $("#result");
-  if (result > 0) {
-    target.css('color', '#800');
-    target.text("You win!");
-  } else if (result < 0) {
-    target.css('color', '#008');
-    target.text("I win!");
+  target.css('color', '#505');
+  target.text("Don't have a cow, man!");
+}
+
+function noEmptySquares(value, index, arr) {
+  "use strict";
+  if (value !== '') {
+    return true
   } else {
-    target.css('color', '#505');
-    target.text("Tie game.");
+    return false
   }
 }
 
@@ -36,14 +37,13 @@ function resetGame() {
 
 function moveAt() {
   "use strict";
-  var playerSquare, computerSquare, board, result, oLocation, oCell;
+  var playerSquare, computerSquare, board;
 
   playerSquare = $(this);
 
-  // return if square is already full or if game is over !!!CHANGE GAME OVER CHECK!!!
-  // if (playerSquare.text() !== '' || checkWin(fetchBoard()) !== 0) {
-  //   return;
-  // }
+  if (playerSquare.text() !== '') {
+    return;
+  }
 
   // // place 'X' at selected location
   playerSquare.css('color', '#800');
@@ -51,14 +51,18 @@ function moveAt() {
 
   board = fetchBoard();
 
-  // $.get("ajax", { squareId: playerSquare.attr("id") }).done(function ( computerMove ) {
-  $.get("ajax", { boardArray: board }).done(function ( computerMove ) {
-    computerSquare = $(computerMove.squareId);
-    // console.log(computerMove.squareId);
-    computerSquare.css('color', '#800');
-    computerSquare.text('O');
-  }, "json");
+  if (board.every(noEmptySquares)) {
+    showGameOver();
+  } else {
 
+  // $.get("ajax", { squareId: playerSquare.attr("id") }).done(function ( computerMove ) {
+    $.get("ajax", { boardArray: board }).done(function ( serverResponse ) {
+      computerSquare = $(serverResponse.squareId);
+      // console.log(serverResponse.squareId);
+      computerSquare.css('color', '#800');
+      computerSquare.text('O');
+    }, "json");
+  };
   // // if game is over, display message
   // board = fetchBoard();
   // result = checkWin(board);
