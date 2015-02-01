@@ -1,7 +1,4 @@
-require 'pry'
-
 class Board
-
 
 	def initialize
 		@squares_array = Array.new(9, "0")
@@ -13,7 +10,6 @@ class Board
 
 	def update!(computer, human_player)
 		[computer, human_player].each do |player|
-			# puts "player_squares: #{player.squares}"
 			player.squares.each do |square|
 				@squares_array[square - 1] = player.letter
 			end
@@ -23,11 +19,4 @@ class Board
 	def full?
 		!@squares_array.include?("0")
 	end
-
-
-
-
-
-
-
 end

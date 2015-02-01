@@ -1,10 +1,7 @@
-# require './player.rb'
 require './board.rb'
 require './simulator.rb'
-# require 'pry'
 
 class Game
-	attr_accessor :players ## REMOVE!! JUST FOR TESTING!! ##
 
 	def initialize
 		@board = Board.new
@@ -15,25 +12,19 @@ class Game
 
 	def start!
 		@board.draw!
-
 		until we_have_a_loser || @board.full?
-			# current_player, other_player = @players.reverse!
 			square = get_player_move
 			player_move!(square)
 			@board.update!(@computer, @player)
-			# current_player.add_square(square)
-			# other_player.lose_square(square)
 			computer_move! unless @board.full?
 			@board.update!(@computer, @player)
 			@board.draw!
 		end
 	end
 
-	def player_move!(square)
-		@player.add_square(square)
-		@computer.lose_square(square)
+	def we_have_a_loser
+		@players.select {|player| player.lost?}.first
 	end
-
 
 	def get_player_move
 		loop do
@@ -47,13 +38,13 @@ class Game
 		!taken_squares.include?(square) && (1..9).to_a.include?(square)
 	end
 
+	def taken_squares
+		@players.map {|player| player.squares}.flatten
+	end		
 
-	# def game_won?
-	# 	@players.map {|player| player.squares}.flatten.include?(13)
-	# end
-
-	def we_have_a_loser
-		@players.select {|player| player.lost?}.first
+	def player_move!(square)
+		@player.add_square(square)
+		@computer.lose_square(square)
 	end
 
 	def computer_move!
@@ -74,38 +65,13 @@ class Game
 		end
 	end
 
-	def taken_squares
-		@players.map {|player| player.squares}.flatten
-	end		
-
 	def open_squares
 		(1..9).to_a - taken_squares 
 	end
 
 	def evaluate_move(move)
 		Simulator.new(@player, @computer, move).evaluate
-
-		# @computer.add_square(move)
-		# @player.lose_square(move)
-
-		# opponent_moves = all_player_moves_to_consider
-		# opponent_moves.each do |opp_move|
-		# 	return "bad" if two_way_win(opp_move)
-		# 	if computer_constrained?(opp_move)
-		# 		return evaluate_move(constrained_computer_move)
-		# 	else
-		# 		return "good"
-		# 	end
-		# end
 	end
-
-
-	private
-
-	def make_players!
-		[Player.new("Computer", "Y"), Player.new("Human", "X")]
-	end
-
 end
 
 
