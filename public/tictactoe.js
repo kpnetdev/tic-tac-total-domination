@@ -28,7 +28,7 @@ function resetGame() {
   "use strict";
   var target;
 
-  $("#tictac td").text('');
+  $("#squares td").text('');
   target = $("#result");
   target.css('color', '#000');
   target.text('Click a square');
@@ -41,48 +41,48 @@ function moveAt() {
   playerSquare = $(this);
 
   // return if square is already full or if game is over !!!CHANGE GAME OVER CHECK!!!
-  if (playerSquare.text() !== '' || checkWin(fetchBoard()) !== 0) {
-    return;
-  }
+  // if (playerSquare.text() !== '' || checkWin(fetchBoard()) !== 0) {
+  //   return;
+  // }
 
-  // place 'X' at selected location
+  // // place 'X' at selected location
   playerSquare.css('color', '#800');
   playerSquare.text('X');
 
-  // if game is over, display message
-  board = fetchBoard();
-  result = checkWin(board);
-  if (result !== 0) {
-    showGameOver(result);
-    return;
-  }
+  // // if game is over, display message
+  // board = fetchBoard();
+  // result = checkWin(board);
+  // if (result !== 0) {
+  //   showGameOver(result);
+  //   return;
+  // }
 
-  // find where to place the 'O'
-  oLocation = selectMove(board);
-  if (oLocation < 0) {
-    // if there is no valid place, it is tie game
-    showGameOver(0);
-    return;
-  }
+  // // find where to place the 'O'
+  // oLocation = selectMove(board);
+  // if (oLocation < 0) {
+  //   // if there is no valid place, it is tie game
+  //   showGameOver(0);
+  //   return;
+  // }
 
-  // place 'O' at location
-  board[oLocation] = 'O';
-  oCell = $("#cell" + oLocation);
-  oCell.css('color', '#008');
-  oCell.text('O');
+  // // place 'O' at location
+  // board[oLocation] = 'O';
+  // oCell = $("#cell" + oLocation);
+  // oCell.css('color', '#008');
+  // oCell.text('O');
 
-  // if game is over, display that
-  result = checkWin(board);
-  if (result !== 0) {
-    showGameOver(result);
-    return;
-  }
+  // // if game is over, display that
+  // result = checkWin(board);
+  // if (result !== 0) {
+  //   showGameOver(result);
+  //   return;
+  // }
 }
 
 $(document).ready(function () {
   "use strict";
 
-  //$("#tictac td").click(moveAt);
+  $("#squares td").click(moveAt);
   $("#tictacreset").click(resetGame);
   resetGame();
 });
