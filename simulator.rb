@@ -18,7 +18,8 @@ class Simulator
 			ways_you_can_die = player_move_sim.find_checkmate_squares
 			return "bad" if ways_you_can_die.count > 1
 			if ways_you_can_die.count == 1
-				return Simulator.new(@player, @computer, ways_you_can_die.first, player_move).evaluate
+				result = Simulator.new(@player, @computer, ways_you_can_die.first, player_move).evaluate
+				return result if result == "bad"
 			end
 		end
 		return "good"

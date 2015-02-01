@@ -11,33 +11,33 @@ class Game
 		@players = [@computer, @player]
 	end
 
-	def start!
-		@board.draw!
-		until we_have_a_loser || @board.full?
-			square = get_player_move
-			player_move!(square)
-			@board.update!(@computer, @player)
-			computer_move! unless @board.full?
-			@board.update!(@computer, @player)
-			@board.draw!
-		end
-	end
+	# def start!
+	# 	@board.draw!
+	# 	until we_have_a_loser || @board.full?
+	# 		square = get_player_move
+	# 		player_move!(square)
+	# 		@board.update!(@computer, @player)
+	# 		computer_move! unless @board.full?
+	# 		@board.update!(@computer, @player)
+	# 		@board.draw!
+	# 	end
+	# end
 
-	def we_have_a_loser
-		@players.select {|player| player.lost?}.first
-	end
+	# def we_have_a_loser
+	# 	@players.select {|player| player.lost?}.first
+	# end
 
-	def get_player_move
-		loop do
-			square = gets.chomp.to_i
-			break square if valid_square?(square)
-			puts "invalid choice"
-		end
-	end
+	# def get_player_move
+	# 	loop do
+	# 		square = gets.chomp.to_i
+	# 		break square if valid_square?(square)
+	# 		puts "invalid choice"
+	# 	end
+	# end
 
-	def valid_square?(square)
-		!taken_squares.include?(square) && (1..9).to_a.include?(square)
-	end
+	# def valid_square?(square)
+	# 	!taken_squares.include?(square) && (1..9).to_a.include?(square)
+	# end
 
 	def taken_squares
 		@players.map {|player| player.squares}.flatten
