@@ -36,7 +36,7 @@ function resetGame() {
 
 function moveAt() {
   "use strict";
-  var playerSquare, board, result, oLocation, oCell;
+  var playerSquare, computerSquare, board, result, oLocation, oCell;
 
   playerSquare = $(this);
 
@@ -48,6 +48,13 @@ function moveAt() {
   // // place 'X' at selected location
   playerSquare.css('color', '#800');
   playerSquare.text('X');
+
+  $.get("ajax", { squareId: playerSquare.attr("id") }).done(function ( computerMove ) {
+    computerSquare = $(computerMove.squareId);
+    console.log(computerMove.squareId);
+    computerSquare.css('color', '#800');
+    computerSquare.text('J');
+  }, "json");
 
   // // if game is over, display message
   // board = fetchBoard();
