@@ -23,10 +23,10 @@ class Game
 	end
 
 	def unbeatable_move
-		winning_move = @player.all_one_move_wins.first
+		winning_move = @player.one_move_losses.first
 		return winning_move if winning_move
 
-		self_defense = (@computer.all_one_move_wins - @computer.squares).first
+		self_defense = (@computer.one_move_losses - @computer.squares).first
 		return self_defense if self_defense
 
 		open_squares.each do |square|

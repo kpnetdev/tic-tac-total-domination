@@ -25,7 +25,7 @@ class Player
 		@winning_combos.select {|combo| combo.length == 1}.flatten
 	end
 
-	def all_one_move_wins(player_move=nil)
+	def one_move_losses(player_move=nil)
 		@winning_combos.select do |combo|
 			test_combo = player_move ? (combo - [player_move]) : combo
 			test_combo.count == 1 && !@squares.include?(test_combo.first)

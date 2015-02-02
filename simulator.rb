@@ -37,7 +37,7 @@ class Simulator
 	end
 
 	def all_player_moves_to_consider
-		constrained_moves = @player.all_one_move_wins
+		constrained_moves = @player.one_move_losses
 		constrained_moves.empty? ? open_squares : constrained_moves
 	end
 
@@ -51,6 +51,6 @@ class Simulator
 	
 	def find_checkmate_squares
 		player_play_move!
-		@computer.all_one_move_wins(@move)
+		@computer.one_move_losses(@move)
 	end
 end
