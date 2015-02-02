@@ -1,7 +1,5 @@
 require 'sinatra'
 require 'json'
-require 'pry'
-
 require './game.rb'
 
 set :public_folder, 'public'
