@@ -46,8 +46,8 @@ player_moves.each do |player_move|
 Okay, so now we consider all the player reactions to our move. We spin up another Simulator instance so we can 'play things out' without messing up the player position values (held in Player objects) up at this level of the simulator.
 
 ```ruby
-ways_you_can_die = player_move_sim.find_checkmate_squares
-return "bad" if ways_you_can_die.count > 1
+	ways_you_can_die = player_move_sim.find_checkmate_squares
+	return "bad" if ways_you_can_die.count > 1
 ```
 
 Boom, here's what we're looking for. If `ways_you_can_die` is more than one...you're in "checkmate". That's bad. Kick out with return and forget this move!
@@ -65,7 +65,7 @@ What if there's exactly *one* way you can die? That's no problem, you just block
 return "good"
 ```
 
-And if it doesn't end up in a bad place...it's a good move! That's the core of the whole application right there.
+And if none of the player's responses result in a bad position...then the computer move we're considering must be good! That's the core of the whole application right there.
 
 ## a note
 
