@@ -23,6 +23,8 @@ class Game
 	end
 
 	def unbeatable_move
+		return 5 unless taken_squares.include?(5)
+
 		winning_move = @player.one_move_losses.first
 		return winning_move if winning_move
 
